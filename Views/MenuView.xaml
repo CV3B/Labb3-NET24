@@ -4,9 +4,22 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Labb3_NET24.Views"
+             xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        
+        <Menu>
+             <MenuItem Header="_File">
+                 <MenuItem Header="_Open Question Pack Option" Icon="{fa:Icon Folder}" ></MenuItem>
+                 <Separator />
+                 <MenuItem Header="E_xit"></MenuItem>
+             </MenuItem>  
+            
+            <MenuItem Header="_Edit" >
+                <MenuItem Header="_Add Question" ></MenuItem>
+                <MenuItem Header="_Remove Question" ></MenuItem>
+            </MenuItem>
+        </Menu>
     </Grid>
 </UserControl>

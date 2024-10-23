@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "dA7i3O99FRE=",
+  "dgSpecHash": "MaDeAPih7T8=",
   "success": true,
-  "projectFilePath": "C:\\Users\\calle\\RiderProjects\\Labb3-NET24\\Labb3-NET24\\Labb3-NET24.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "C:\\Users\\Calle\\RiderProjects\\Labb3-NET24\\Labb3-NET24.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Calle\\.nuget\\packages\\fontawesome.sharp\\6.6.0\\fontawesome.sharp.6.6.0.nupkg.sha512"
+  ],
   "logs": []
 }
