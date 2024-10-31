@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.ComponentModel;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -23,5 +24,15 @@ public partial class MainWindow : Window
         InitializeComponent();
         DataContext = new MainWindowViewModel();
         
+    }
+
+
+    private void MainWindow_OnClosing(object? sender, CancelEventArgs e)
+    {
+        if (DataContext is not MainWindowViewModel viewModel) return;
+
+        viewModel.SavePacksToJson();
+        
+        // base.OnClosing(e);
     }
 }

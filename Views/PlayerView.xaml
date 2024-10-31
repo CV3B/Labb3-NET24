@@ -5,8 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Labb3_NET24.Views"
              mc:Ignorable="d"
+             DataContext="{Binding PlayerViewModel}"
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        
+        <Button HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding TestData}" Command="{Binding UpdateButtonCommand}" ></Button>
     </Grid>
 </UserControl>

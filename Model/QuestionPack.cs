@@ -17,6 +17,8 @@ public class QuestionPack
         Name = name;
         Difficulty = difficulty;
         TimeLimitInSeconds = timeLimitInSeconds;
-        Questions = new List<Question>();
+        Questions = new List<Question>() {new Question("New Question", " ", " ", " ", " ")};
     }
+
+
 }

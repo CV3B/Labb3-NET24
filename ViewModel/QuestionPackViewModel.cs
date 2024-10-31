@@ -1,5 +1,7 @@
 ﻿using System.Collections.ObjectModel;
+using Labb3_NET24.Command;
 using Labb3_NET24.Model;
+using Labb3_NET24.Views.Dialogs;
 
 namespace Labb3_NET24.ViewModel;
 

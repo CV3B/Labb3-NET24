@@ -5,20 +5,76 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Labb3_NET24.Views"
              xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
-
+             xmlns:sys="clr-namespace:System;assembly=mscorlib" 
+             xmlns:packs="clr-namespace:Labb3_NET24.ViewModel"
+             DataContext="{Binding CommandsViewModel}"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <Menu>
              <MenuItem Header="_File">
-                 <MenuItem Header="_Open Question Pack Option" Icon="{fa:Icon Folder}" ></MenuItem>
+                 <MenuItem 
+                     Header="_New Question Pack" 
+                     Icon="{fa:Icon FolderPlus}"  
+                     Command="{Binding ShowCreatePackCommand}" />
+                 <MenuItem 
+                     Header="_Select Question Pack" 
+                     Icon="{fa:Icon FolderOpen}" 
+                     ItemsSource="{Binding Packs}" >
+                     <MenuItem.ItemTemplate >
+                         <DataTemplate >
+                             <TextBlock >
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="{}{0} ({1})">
+                                        <Binding Path="Name" />
+                                        <Binding Path="Difficulty" />
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                         </DataTemplate>
+                     </MenuItem.ItemTemplate>
+                     <MenuItem.ItemContainerStyle>
+                         <Style TargetType="MenuItem">
+                             <Setter 
+                                 Property="Command" 
+                                 Value="{Binding DataContext.SelectQuestionPackCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+                             <Setter Property="CommandParameter" Value="{Binding}" />
+                         </Style>
+                     </MenuItem.ItemContainerStyle>
+                 </MenuItem>
+                 <MenuItem 
+                     Header="_Delete Question Pack" 
+                     Icon="{fa:Icon FolderMinus}" 
+                     Command="{Binding DeleteQuestionPackCommand}" />
                  <Separator />
-                 <MenuItem Header="E_xit"></MenuItem>
+                 <MenuItem Header="_Import Questions" Icon="{fa:Icon CloudArrowDown}" />
+                 <Separator />
+                 <MenuItem 
+                     Header="E_xit" 
+                     Icon="{fa:Icon Xmark}" 
+                     CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
+                     Command="{Binding CloseWindowCommand}" />
              </MenuItem>  
             
             <MenuItem Header="_Edit" >
-                <MenuItem Header="_Add Question" ></MenuItem>
-                <MenuItem Header="_Remove Question" ></MenuItem>
+                <MenuItem 
+                    Header="_Add Question" 
+                    Icon="{fa:Icon Plus}" 
+                    Command="{Binding DataContext.ConfigurationViewModel.AddQuestionCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"/>
+                <MenuItem 
+                    Header="_Remove Question" 
+                    Icon="{fa:Icon Minus}" 
+                    Command="{Binding DataContext.ConfigurationViewModel.RemoveQuestionCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"/>
+                <MenuItem 
+                    Header="Pack _Option" 
+                    Icon="{fa:Icon Gear}" 
+                    Command="{Binding ShowPackOptionsCommand}"/>
+            </MenuItem>
+            <MenuItem Header="_View" >
+                <MenuItem Header="_Play" Icon="{fa:Icon Play}" />
+                <MenuItem Header="_Edit" Icon="{fa:Icon Gears}" />
+                <Separator />
+                <MenuItem Header="_Fullscreen" Icon="{fa:Icon Expand}" />
             </MenuItem>
         </Menu>
     </Grid>
