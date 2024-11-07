@@ -23,16 +23,13 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
         DataContext = new MainWindowViewModel();
-        
     }
-
 
     private void MainWindow_OnClosing(object? sender, CancelEventArgs e)
     {
         if (DataContext is not MainWindowViewModel viewModel) return;
 
-        viewModel.SavePacksToJson();
+        JsonHandle.SavePacksToJson(viewModel.Packs);
         
-        // base.OnClosing(e);
     }
 }

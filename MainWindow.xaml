@@ -5,20 +5,48 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Labb3_NET24"
         xmlns:views="clr-namespace:Labb3_NET24.Views"
+        xmlns:viewModel="clr-namespace:Labb3_NET24.ViewModel"
         mc:Ignorable="d"
         Closing="MainWindow_OnClosing"
-        Title="MainWindow" Height="450" Width="800"
-        >
+        Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </Window.Resources>
+    <Window.InputBindings>
+        <KeyBinding Key="Insert" Command="{Binding ConfigurationViewModel.AddQuestionCommand}" />
+        <KeyBinding Key="Delete" Command="{Binding ConfigurationViewModel.RemoveQuestionCommand}" />
+        <KeyBinding Key="O" Modifiers="Control" Command="{Binding CommandsViewModel.ShowPackOptionsCommand}" />
+
+        <KeyBinding Key="P" Modifiers="Control" Command="{Binding CommandsViewModel.DisplayPlayerCommand}" />
+        <KeyBinding Key="E" Modifiers="Control" Command="{Binding CommandsViewModel.DisplayConfigurationCommand}" />
+        <KeyBinding 
+            Key="Enter" 
+            Modifiers="Alt" 
+            Command="{Binding CommandsViewModel.FullscreenCommand}" 
+            CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}" />
+
+    </Window.InputBindings>
+
+    <Window.DataContext>
+        <viewModel:MainWindowViewModel />
+    </Window.DataContext>
     <Grid>
-        
-        
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
+        
         <views:MenuView />
-        <!-- <views:PlayerView Grid.Row="1"></views:PlayerView> -->
-        <views:ConfigurationView Grid.Row="1"></views:ConfigurationView>
-   
+        
+        <Grid Grid.Row="1"
+              Visibility="{Binding Path=CommandsViewModel.IsConfigurationView, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <views:ConfigurationView />
+        </Grid>
+        
+        <Grid Grid.Row="1"
+              Visibility="{Binding Path=CommandsViewModel.IsPlayerView, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <views:PlayerView />
+        </Grid>
+
     </Grid>
 </Window>
