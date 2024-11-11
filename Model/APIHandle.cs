@@ -32,13 +32,13 @@ public class ApiHandle
                 getResponse.EnsureSuccessStatusCode();
 
                 var responseJson = await getResponse.Content.ReadAsStringAsync();
-                var result = JsonSerializer.Deserialize<RootObject>(responseJson);
+                var apiContent = JsonSerializer.Deserialize<RootObject>(responseJson);
 
                 List<ApiHandle> questions = new List<ApiHandle> { };
 
-                if (result.results != null)
+                if (apiContent.results != null)
                 {
-                    foreach (var apiResult in result.results)
+                    foreach (var apiResult in apiContent.results)
                     {
                         if (apiResult != null)
                         {
@@ -49,7 +49,7 @@ public class ApiHandle
                     }
                 }
 
-                return new RootObject() { response_code = result.response_code, results = questions };
+                return new RootObject() { response_code = apiContent.response_code, results = questions };
             }
             catch (Exception e)
             {
@@ -58,7 +58,7 @@ public class ApiHandle
             }
         }
     }
-
+    
     public void DecodeHtml(ApiHandle apiResult)
     {
         apiResult.question = HttpUtility.HtmlDecode(apiResult.question);

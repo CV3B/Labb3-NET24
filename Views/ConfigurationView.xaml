@@ -65,13 +65,14 @@
                 Grid.ColumnSpan="2"
                 x:Name="listBoxQuestions"
                 ItemsSource="{Binding ActivePack.Questions}"
+                ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                 VerticalAlignment="Stretch"
                 HorizontalAlignment="Stretch">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel>
                             <TextBlock FontWeight="Bold">Question: </TextBlock>
-                            <TextBlock Text="{Binding Query}" />
+                            <TextBlock TextWrapping="Wrap" Text="{Binding Query}" />
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
@@ -93,6 +94,8 @@
                 <TextBox
                     Text="{Binding ActiveQuestion.Query, UpdateSourceTrigger=PropertyChanged}"
                     VerticalAlignment="Stretch"
+                    TextWrapping="Wrap"
+                    MaxLength="196"
                     Margin="10"
                     Height="70" />
             </StackPanel>
