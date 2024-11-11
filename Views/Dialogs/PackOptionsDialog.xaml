@@ -1,0 +1,40 @@
+<Window x:Class="Labb3_NET24.Views.Dialogs.PackOptionsDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:Labb3_NET24.Views.Dialogs"
+        xmlns:configView="clr-namespace:Labb3_NET24.Model"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib" 
+        mc:Ignorable="d"
+        DataContext="ActivePack"
+        Title="Pack Options" Height="200" Width="200"
+        ResizeMode="NoResize"
+        >
+    <Grid>
+        <Grid.Resources>
+            <ObjectDataProvider x:Key="EnumDifficulties"
+                        ObjectType="{x:Type sys:Enum}"
+                        MethodName="GetValues">
+                <ObjectDataProvider.MethodParameters>
+                    <x:Type TypeName="configView:Difficulty" />
+                </ObjectDataProvider.MethodParameters>
+            </ObjectDataProvider>
+        </Grid.Resources>
+        
+        <StackPanel Margin="5 5 5 5" >
+            <Label Content="Pack Name:" FontWeight="Bold" />
+            <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
+            <Label Content="Difficulty" FontWeight="Bold" />
+            <ComboBox 
+                ItemsSource="{Binding Source={StaticResource EnumDifficulties}}"
+                SelectedValue="{Binding Difficulty}" >
+            </ComboBox>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Time Limit:" FontWeight="Bold" />
+                <Label Content="{Binding TimeLimitInSeconds}" />
+            </StackPanel>
+            <Slider Minimum="5" Maximum="120" Value="{Binding TimeLimitInSeconds}" />
+        </StackPanel>
+    </Grid>
+</Window>
