@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using System.Threading.Channels;
 using System.Windows;
 using System.Windows.Forms.VisualStyles;
 using Labb3_NET24.Command;
@@ -10,8 +11,13 @@ namespace Labb3_NET24.ViewModel;
 public class CommandsViewModel : ViewModelBase
 {
     private readonly MainWindowViewModel mainWindowViewModel;
+    
+    public APIHandle APIHandle { get; set; }
+    public TriviaCategories TriviaCategories { get; }
 
     public PackOptionsDialog packOptionsDialog;
+    public ImportQuestionsDialog ImportQuestionsDialog { get; set; }
+
 
     public QuestionPackViewModel ActivePack
     {
@@ -26,12 +32,14 @@ public class CommandsViewModel : ViewModelBase
     
     public DelegateCommand ShowPackOptionsCommand { get; }
     public DelegateCommand ShowCreatePackCommand { get; }
+    public DelegateCommand ShowImportQuestionsCommand { get; }
     public DelegateCommand CreateNewPackCommand { get; }
     public DelegateCommand CloseWindowCommand { get; }
     public DelegateCommand DeleteQuestionPackCommand { get; }
     public DelegateCommand SelectQuestionPackCommand { get; }
     public DelegateCommand DisplayConfigurationCommand { get; }
     public DelegateCommand DisplayPlayerCommand { get; }
+    public DelegateCommand ImportQuestionCommand { get; }
 
     public DelegateCommand FullscreenCommand { get; }
 
@@ -68,10 +76,12 @@ public class CommandsViewModel : ViewModelBase
 
         ShowPackOptionsCommand = new DelegateCommand(ShowPackOptionsButton);
         ShowCreatePackCommand = new DelegateCommand(ShowCreatePackButton);
+        ShowImportQuestionsCommand = new DelegateCommand(ShowImportQuestionButton);
 
         CreateNewPackCommand = new DelegateCommand(CreateNewPackButton);
         DeleteQuestionPackCommand = new DelegateCommand(DeleteQuestionPackButton, CanDeleteQuestionPackButton);
         SelectQuestionPackCommand = new DelegateCommand(SelectQuestionPackButton);
+        ImportQuestionCommand = new DelegateCommand(ImportQuestionButton);
 
         DisplayConfigurationCommand = new DelegateCommand(SwitchDisplayViewCommand, CanSwitchDisplayConfiguration);
         DisplayPlayerCommand = new DelegateCommand(SwitchDisplayViewCommand, CanSwitchDisplayPlayer);
@@ -144,6 +154,89 @@ public class CommandsViewModel : ViewModelBase
         DisplayPlayerCommand.RaiseCanExecuteChanged();
         DisplayConfigurationCommand.RaiseCanExecuteChanged();
         mainWindowViewModel.ConfigurationViewModel.RemoveQuestionCommand.RaiseCanExecuteChanged();
+    }
+    
+    private async void ShowImportQuestionButton(object obj)
+    {
+        await Task.Run((() => Categories = new TriviaCategories().GetCategories().Result));
+        
+        Category = Categories[0];
+        Difficulty = Difficulty.Easy;
+        NumberOfQuestions = 1;
+        ImportQuestionsDialog = new ImportQuestionsDialog() { DataContext = this };
+        ImportQuestionsDialog.ShowDialog();
+    }
+
+    public ObservableCollection<KeyValuePair<int, string>> Categories { get; set; }
+    
+    private KeyValuePair<int, string> _category;
+    public KeyValuePair<int, string> Category
+    {
+        get { return _category; }
+        set
+        {
+            _category = value;
+            RaisePropertyChanged();
+        }
+    }
+    
+    private Difficulty _difficulty;
+    public Difficulty Difficulty
+    {
+        get { return _difficulty; }
+        set
+        {
+            _difficulty = value;
+            RaisePropertyChanged();
+        }
+    }
+    
+    private int _numberOfQuestions;
+    public int NumberOfQuestions
+    {
+        get { return _numberOfQuestions; }
+        set
+        {
+            _numberOfQuestions = value;
+            RaisePropertyChanged();
+        }
+    }
+
+    private async void ImportQuestionButton(object obj)
+    {
+        APIHandle = new APIHandle();
+        RootObject apiResult = await APIHandle.LoadApi(NumberOfQuestions, Category.Key, Difficulty);
+
+        switch (apiResult.response_code)
+        {
+            case 0:
+                foreach (var importedQuestion in apiResult.results)
+                {
+                    ActivePack.Questions.Add(new Question(importedQuestion.question, importedQuestion.correct_answer, importedQuestion.incorrect_answers[0], importedQuestion.incorrect_answers[1], importedQuestion.incorrect_answers[2]));
+                }
+                MessageBox.Show("Returned results successfully!", "Success" ,MessageBoxButton.OK);
+                break;
+            case 1:
+                MessageBox.Show("No results were found!", "No results", MessageBoxButton.OK, MessageBoxImage.Information);
+                break;
+            case 2:
+                MessageBox.Show("Invalid parameter!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                break;
+            case 3:
+                MessageBox.Show("Token not found!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                break;
+            case 4:
+                MessageBox.Show("Token is empty!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                break;
+            case 5:
+                MessageBox.Show("Rate limit!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                break;
+            default:
+                MessageBox.Show("Unknown response code!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                break;
+        }
+
+        CloseWindowButton(obj);
     }
 
     private bool CanSwitchDisplayConfiguration(object? arg)

@@ -48,7 +48,10 @@
                     Icon="{fa:Icon FolderMinus}"
                     Command="{Binding DeleteQuestionPackCommand}" />
                 <Separator />
-                <MenuItem Header="_Import Questions" Icon="{fa:Icon CloudArrowDown}" />
+                <MenuItem 
+                    Header="_Import Questions"
+                    Icon="{fa:Icon CloudArrowDown}"
+                    Command="{Binding ShowImportQuestionsCommand}"/>
                 <Separator />
                 <MenuItem
                     Header="E_xit"

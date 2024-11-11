@@ -49,7 +49,7 @@ public class MainWindowViewModel : ViewModelBase
         Packs = await JsonHandle.LoadPacksFromJson();
 
         ActivePack = Packs.First();
-
+        
         CommandsViewModel = new CommandsViewModel(this);
 
         PlayerViewModel = new PlayerViewModel(this);

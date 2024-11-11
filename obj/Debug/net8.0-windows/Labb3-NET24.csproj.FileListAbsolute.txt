@@ -68,3 +68,5 @@ C:\Users\calle\RiderProjects\Labb3-NET24\Labb3-NET24\obj\Debug\net8.0-windows\Vi
 C:\Users\calle\RiderProjects\Labb3-NET24\Labb3-NET24\obj\Debug\net8.0-windows\Views\Dialogs\PackOptionsDialog.g.cs
 C:\Users\calle\RiderProjects\Labb3-NET24\Labb3-NET24\obj\Debug\net8.0-windows\Views\Dialogs\CreateNewPackDialog.baml
 C:\Users\calle\RiderProjects\Labb3-NET24\Labb3-NET24\obj\Debug\net8.0-windows\Views\Dialogs\PackOptionsDialog.baml
+C:\Users\calle\RiderProjects\Labb3-NET24\Labb3-NET24\obj\Debug\net8.0-windows\Views\Dialogs\ImportQuestionsDialog.g.cs
+C:\Users\calle\RiderProjects\Labb3-NET24\Labb3-NET24\obj\Debug\net8.0-windows\Views\Dialogs\ImportQuestionsDialog.baml

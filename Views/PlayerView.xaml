@@ -49,14 +49,16 @@
                 Grid.Row="0" 
                 Grid.Column="3" 
                 FontWeight="Bold" 
-                FontSize="40" 
+                FontSize="30" 
                 HorizontalAlignment="Right"
                 Margin="0 0 5 0" 
                 Text="{Binding Countdown}" />
-            <Label
+            <TextBlock
                 Grid.ColumnSpan="4"
-                FontSize="40"
-                Content="{Binding CurrentQuestionText}"
+                FontSize="30"
+                Text="{Binding CurrentQuestionText}"
+                TextWrapping="Wrap"
+                Margin="70 0 70 0"
                 VerticalAlignment="Center"
                 HorizontalAlignment="Center" />
             <TextBlock
