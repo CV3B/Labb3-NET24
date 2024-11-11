@@ -8,10 +8,10 @@ namespace Labb3_NET24.Model;
 public class RootObject
 {
     public int response_code { get; set; }
-    public List<APIHandle> results { get; set; }
+    public List<ApiHandle> results { get; set; }
 }
 
-public class APIHandle
+public class ApiHandle
 {
     public string type { get; set; }
     public string difficulty { get; set; }
@@ -34,7 +34,7 @@ public class APIHandle
                 var responseJson = await getResponse.Content.ReadAsStringAsync();
                 var result = JsonSerializer.Deserialize<RootObject>(responseJson);
 
-                List<APIHandle> questions = new List<APIHandle> { };
+                List<ApiHandle> questions = new List<ApiHandle> { };
 
                 if (result.results != null)
                 {
@@ -59,7 +59,7 @@ public class APIHandle
         }
     }
 
-    public void DecodeHtml(APIHandle apiResult)
+    public void DecodeHtml(ApiHandle apiResult)
     {
         apiResult.question = HttpUtility.HtmlDecode(apiResult.question);
         apiResult.correct_answer = HttpUtility.HtmlDecode(apiResult.correct_answer);

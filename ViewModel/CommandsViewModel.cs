@@ -12,7 +12,7 @@ public class CommandsViewModel : ViewModelBase
 {
     private readonly MainWindowViewModel mainWindowViewModel;
     
-    public APIHandle APIHandle { get; set; }
+    public ApiHandle ApiHandle { get; set; }
     public TriviaCategories TriviaCategories { get; }
 
     public PackOptionsDialog packOptionsDialog;
@@ -204,8 +204,8 @@ public class CommandsViewModel : ViewModelBase
 
     private async void ImportQuestionButton(object obj)
     {
-        APIHandle = new APIHandle();
-        RootObject apiResult = await APIHandle.LoadApi(NumberOfQuestions, Category.Key, Difficulty);
+        ApiHandle = new ApiHandle();
+        RootObject apiResult = await ApiHandle.LoadApi(NumberOfQuestions, Category.Key, Difficulty);
 
         switch (apiResult.response_code)
         {
